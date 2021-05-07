@@ -11,32 +11,12 @@ var studentSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    NamSinh: {
-        type: String,
-       
-    },
-    DiemMon1: {
-        type: Number,
-       
-    },
-    DiemMon2: {
-        type: Number,
-       
-    },
-    DiemMon3: {
-        type: Number,
-       
-    },
     Email: {
         type: String,
         unique: true,
     
-    },
-    SDT: {
-        type: String,
-        unique: true,
+    }
     
-    },
 
 
 

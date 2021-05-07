@@ -1,0 +1,59 @@
+  <input type="button" id="btn" value="Lấy thông tin sinh viên từ server">
+
+    <div id="danh-sach-sv"></div>
+
+    <script>
+
+        var sinhVienContainer = document.getElementById('danh-sach-sv');
+
+        var btn = document.getElementById('btn');
+
+        btn.addEventListener('click', function() {
+
+            var myRequest = new XMLHttpRequest();
+
+            myRequest.open('GET', 'https://legiacong.github.io/sinhVien.json');
+
+            myRequest.onload = function() {
+
+                if (myRequest.status >= 200 && myRequest.status < 400) {
+
+                    var myData = JSON.parse(myRequest.responseText);
+
+                    renderHTML(myData); 
+
+                } else {
+
+                    console.log("Da ket noi toi server, nhung server gui ve mot thong bao loi");
+
+                }
+
+            };
+
+            // ham xu ly khi AJAX bi loi
+
+            myRequest.onerror = function() {
+
+                console.log("Loi ket noi");
+
+            }
+
+            myRequest.send();
+
+        }); 
+
+        function renderHTML(data) {
+
+            var htmlString = "";
+
+            for (var i = 0; i < data.length; i++ ) {
+
+                htmlString += "<p>" + data[i].ten + "</p>";
+
+            }
+
+            sinhVienContainer.insertAdjacentHTML('beforeend', htmlString);
+
+        }
+
+    </script>

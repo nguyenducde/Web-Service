@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Lab 13</title>
+    <style>
+            table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            }
+
+            td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            }
+
+            tr:nth-child(even) {
+            background-color: #dddddd;
+            }
+</style>
+</head>
+<body>
+     <div>
+         <h2>Danh sách sinh viên</h2>
+         <button data-toggle="modal" data-target="#createStudentMd" onclick="createStudent()">Thêm</button>
+         <table id="list-student">
+         </table>
+         
+        <!-- Modal Create Student -->
+<div class="modal fade" id="createStudentMd" role="dialog">
+            <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thêm sinh viên</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="fname">MSSV:</label>
+                    <input type="text" id="mssvCreat"><br><br>
+                    <label for="lname">HoVaTen</label>
+                    <input type="text" id="nameCreat" ><br><br>
+                    <label for="lname">Email</label>
+                    <input type="text" id="emailCreat"><br><br>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="createStudent()">Thêm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Thoát</button>
+        
+            </div>
+            </div>
+            
+            </div>
+        </div>
+        <!-- Modal Edit Student -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cập nhật sinh viên</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="fname">MSSV:</label>
+                    <input type="text" id="mssv"><br><br>
+                    <label for="lname">HoVaTen</label>
+                    <input type="text" id="name" ><br><br>
+                    <label for="lname">Email</label>
+                    <input type="text" id="email"><br><br>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="editStudent()">Cập nhật</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+             <p id="lau">á á á </p>    
+            </div>
+            </div>
+            
+            </div>
+        </div>
+       <!---->
+         
+     </div>
+     <script >
+         //Lấy danh sách sinh viên
+         function start(){
+             var postAPi = "http://localhost:5000/student";
+                fetch(postAPi)
+                    .then(function (res) {
+                        return res.json();
+                    })
+                    .then(function (student) {
+                        var htmls = student.map(function (student) {
+                            return `
+                                <tr>
+                                    <td>${student.MSSV}</td>
+                                    <td>${student.HoVaTen}</td>
+                                    <td>${student.Email}</td>
+                                    <td><button onclick="deleteStudent('${student._id}')">Xóa</button></td>
+                                    <td><button data-toggle="modal" data-target="#myModal" onclick="editStudentLau('${student._id}')">Sửa</button></td>
+                                </tr>
+                        `
+                        });
+                        var html = htmls.join('');
+                        document.getElementById('list-student').innerHTML=html;
+                    });
+         }
+         start();
+          //Xóa sinh viên
+         function deleteStudent(id){
+                        var requestOptions = {
+                    method: 'DELETE',
+                    redirect: 'follow'
+            };
+               fetch(`http://localhost:5000/student/${id}`,requestOptions)
+                    .then(function (res) {
+                        alert('Xóa thành công');
+                         setTimeout(`window.location.href="/"`,1000);
+                    })          
+        }
+        //Sửa sinh viên
+       function editStudentLau(id){
+          document.getElementById("lau").innerHTML = id;
+        $("#lau").hide();
+        }
+        function editStudent(){
+            var id=$("#lau").text();
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                var mssv=document.getElementById('mssv').value;
+                var name=document.getElementById('name').value;
+                var email=document.getElementById('email').value;
+                var raw = JSON.stringify({
+                    "_id": `${id}`,
+                    "MSSV": `${mssv}`,
+                    "HoVaTen": `${name}`,
+                    "Email": `${email}`,
+                });
+
+                var requestOptions = {
+                    method: 'PUT',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+
+                fetch(`http://localhost:5000/student/${id}`, requestOptions)
+                .then(function(result) {
+                   // console.log(result)
+                     setTimeout(`window.location.href="/"`,1000);
+                } 
+                )
+                .catch(error => console.log('error', error));
+        }
+        //Tạo sinh Viên
+        function createStudent(){
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                var mssvs=document.getElementById('mssvCreat').value;
+                var names=document.getElementById('nameCreat').value;
+                var emails=document.getElementById('emailCreat').value;
+                var raw = JSON.stringify({
+                    "MSSV": `${mssvs}`,
+                    "HoVaTen": `${names}`,
+                    "Email": `${emails}`,
+                });
+
+                var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+                };
+                 if(mssvs!=''&&names!=''&&emails!='')
+                 { 
+                    fetch("http://localhost:5000/student", requestOptions)
+                    .then(function (result){
+                        alert("Thêm thành công");
+                        setTimeout(`window.location.href="/"`,1000);
+                    } )
+                    .catch(error => console.log('error', error));
+                 }   
+                
+         }
+     </script>
+</body>
+
+</html>

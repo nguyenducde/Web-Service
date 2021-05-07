@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+    <!-- thong tin sinh vien -->
+    <students>
+        <student>
+            <name>Nguyen Duc De</name>
+            <age>21</age>
+            <score>
+                <english>6</english>
+            </score>
+            <gender>Male</gender>
+        </student>
+        
+    </students>

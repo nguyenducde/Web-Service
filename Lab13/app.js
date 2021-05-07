@@ -30,3 +30,6 @@ mongoose.connect(configDB.url, connectOptions)
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 app.use(studentRouter);
+app.get('/', (req, res) => {
+    return res.render('index.ejs')
+})

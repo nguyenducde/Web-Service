@@ -16,12 +16,8 @@ module.exports.CreateStudent = (req, res, next) => {
     var student = new students({
         MSSV: req.body.MSSV,
         HoVaTen: req.body.HoVaTen,
-        NamSinh: req.body.NamSinh,
-        DiemMon1: req.body.DiemMon1,
-        DiemMon2: req.body.DiemMon2,
-        DiemMon3: req.body.DiemMon3,
         Email: req.body.Email,
-        SDT: req.body.SDT
+       
     });
  student
     .save(student)
