@@ -1,0 +1,73 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A cool thing made with Glitch">
+
+    <title>Lab2</title>
+
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+<!--     <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+    /> -->
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- import the webpage's client-side javascript file -->
+    <script src="/script.js" defer></script>
+  </head>
+  <body>
+    <nav class="nav">
+      <i class="fal fa-bars menu-toggle"></i>
+      <ul class="menu">
+        <li class="menu-item">
+          <a href="/" class="menu-link">
+            Trang chủ
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/lastest-news" class="menu-link">
+            Tin tức mới nhất
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/hot-news" class="menu-link">
+            Tin hot
+          </a>
+        </li>
+      </ul>
+      </nav>
+    
+    <h2 id="title-page">
+      
+    </h2>
+
+    <main>
+<!--       <form>
+        <label>
+          <input id="inputURL" name="inputURL" type="text" maxlength="100" required placeholder="url!">
+        </label>
+        <button type="submit" id="submitLayTin">Lay tin</button>
+      </form> -->
+
+      <section class="dreams">
+        <ul id="loading">
+          <em>LOADING ........&hellip;</em>
+        </ul>
+      </section>
+      
+      <div id="content">
+      </div>
+      
+    </main>
+
+    <div class="glitchButton" style="position:fixed;top:2em;right:20px;"></div>
+    <script src="https://button.glitch.me/button.js" defer></script>
+  </body>
+</html>
